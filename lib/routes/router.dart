@@ -11,25 +11,28 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         return const BachelorsMaster();
       },
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'favorites',
+          builder: (BuildContext context, GoRouterState state) {
+            return const BachelorFavorites();
+          },
+        ),
+        GoRoute(
+          path: 'bachelor/:id',
+          builder: (BuildContext context, GoRouterState state) {
+            if (state.pathParameters['id'] == null) {
+              return const CupertinoPageScaffold(
+                child: Center(
+                  child: Text('Invalid ID'),
+                ),
+              );
+            }
+            return BachelorDetails(bachelorId: state.pathParameters['id'] as String);
+          },
+        ),
+      ]
     ),
-    GoRoute(
-      path: '/favorites',
-      builder: (BuildContext context, GoRouterState state) {
-        return const BachelorFavorites();
-      },
-    ),
-    GoRoute(
-      path: '/bachelor/:id',
-      builder: (BuildContext context, GoRouterState state) {
-        if (state.pathParameters['id'] == null) {
-          return const CupertinoPageScaffold(
-            child: Center(
-              child: Text('Invalid ID'),
-            ),
-          );
-        }
-        return BachelorDetails(bachelorId: state.pathParameters['id'] as String);
-      },
-    ),
+
   ],
 );
