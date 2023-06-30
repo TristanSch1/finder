@@ -10,19 +10,16 @@ class BachelorSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final BachelorsStore store = Provider.of<BachelorsStore>(context);
-    final TextEditingController _controller = TextEditingController(text: store.searchFilter);
     return Observer(
-      builder: (_) => TextField(
-        decoration: const InputDecoration(
-          hintText: 'Rechercher un bachelor',
-          prefixIcon: Icon(Icons.search),
-        ),
-        onChanged: (String value) {
-          store.searchFilter = value;
-        },
-        controller: _controller,
-
-      ),
+      builder: (_) {
+        return TextField(
+          decoration: const InputDecoration(
+            hintText: 'Rechercher un bachelor',
+            prefixIcon: Icon(Icons.search),
+          ),
+          onChanged: (String value) => store.setSearchFilter(value),
+        );
+    },
     );
   }
 }

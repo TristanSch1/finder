@@ -41,7 +41,8 @@ class BachelorDetails extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(bachelorsStore.disliked.contains(bachelor.id) ? 'Added to unliked' : 'Removed from unliked'),
-                            backgroundColor: Theme.of(context).primaryColor
+                            backgroundColor: Colors.red.shade400,
+                            duration: const Duration(seconds: 1),
                             ),
                         );
 
@@ -67,7 +68,8 @@ class BachelorDetails extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                               content: Text(bachelorsStore.liked.contains(bachelor.id) ? 'Added to liked' : 'Removed from liked'),
-                              backgroundColor: Theme.of(context).primaryColor
+                              backgroundColor: Theme.of(context).primaryColor,
+                              duration: const Duration(seconds: 1),
                           ),
                         );
                       },

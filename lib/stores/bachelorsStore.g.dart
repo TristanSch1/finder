@@ -9,19 +9,19 @@ part of 'bachelorsStore.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$BachelorsStore on _BachelorsStore, Store {
-  Computed<List<Bachelor>>? _$bachelorsComputed;
-
-  @override
-  List<Bachelor> get bachelors =>
-      (_$bachelorsComputed ??= Computed<List<Bachelor>>(() => super.bachelors,
-              name: '_BachelorsStore.bachelors'))
-          .value;
   Computed<List<Bachelor>>? _$likedListComputed;
 
   @override
   List<Bachelor> get likedList =>
       (_$likedListComputed ??= Computed<List<Bachelor>>(() => super.likedList,
               name: '_BachelorsStore.likedList'))
+          .value;
+  Computed<List<Bachelor>>? _$bachelorsComputed;
+
+  @override
+  List<Bachelor> get bachelors =>
+      (_$bachelorsComputed ??= Computed<List<Bachelor>>(() => super.bachelors,
+              name: '_BachelorsStore.bachelors'))
           .value;
 
   late final _$likedAtom =
@@ -114,6 +114,17 @@ mixin _$BachelorsStore on _BachelorsStore, Store {
   }
 
   @override
+  dynamic setSearchFilter(String value) {
+    final _$actionInfo = _$_BachelorsStoreActionController.startAction(
+        name: '_BachelorsStore.setSearchFilter');
+    try {
+      return super.setSearchFilter(value);
+    } finally {
+      _$_BachelorsStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic clearFilters() {
     final _$actionInfo = _$_BachelorsStoreActionController.startAction(
         name: '_BachelorsStore.clearFilters');
@@ -142,8 +153,8 @@ liked: ${liked},
 disliked: ${disliked},
 genderFilter: ${genderFilter},
 searchFilter: ${searchFilter},
-bachelors: ${bachelors},
-likedList: ${likedList}
+likedList: ${likedList},
+bachelors: ${bachelors}
     ''';
   }
 }

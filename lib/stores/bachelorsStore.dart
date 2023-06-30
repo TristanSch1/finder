@@ -57,6 +57,11 @@ abstract class _BachelorsStore with Store {
   }
 
   @action
+  setSearchFilter(String value) {
+    searchFilter = value;
+  }
+
+  @action
   clearFilters() {
     genderFilter = GenderFilter.all;
     searchFilter = '';
@@ -66,6 +71,9 @@ abstract class _BachelorsStore with Store {
   clearLiked() {
     liked = ObservableList.of([]);
   }
+
+  @computed
+  List<Bachelor> get likedList => bachelors.where((Bachelor bachelor) => liked.contains(bachelor.id)).toList();
 
   @computed
   List<Bachelor> get bachelors {
@@ -94,8 +102,6 @@ abstract class _BachelorsStore with Store {
   bool isLiked(String id) => liked.contains(id);
   bool isDisliked(String id) => disliked.contains(id);
 
-  @computed
-  List<Bachelor> get likedList => bachelors.where((Bachelor bachelor) => liked.contains(bachelor.id)).toList();
 }
 
 class BachelorsStore = _BachelorsStore with _$BachelorsStore;

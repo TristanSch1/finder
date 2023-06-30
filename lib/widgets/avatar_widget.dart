@@ -10,7 +10,7 @@ class Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(4.0), // Ajoute un padding de 8 pixels à l'intérieur de l'avatar
+      padding: const EdgeInsets.all(4.0),
       width: width ?? 96,
       height: height ?? 96,
       decoration: BoxDecoration(
