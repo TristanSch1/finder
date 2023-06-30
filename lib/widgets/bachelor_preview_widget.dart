@@ -12,14 +12,14 @@ class BachelorPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.go('/bachelor/${bachelor.id}');
+        context.push('/bachelor/${bachelor.id}');
       },
       child: Container(
         padding: const EdgeInsets.all(8),
         alignment: Alignment.centerLeft,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Colors.white70,
+          color: Theme.of(context).cardColor,
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.2),
@@ -35,26 +35,20 @@ class BachelorPreview extends StatelessWidget {
             Avatar(imagePath: bachelor.avatar),
             const SizedBox(width: 8),
             Expanded(
-              child:             Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     '${bachelor.firstname} ${bachelor.lastname}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
+                    style: Theme.of(context).textTheme.displayMedium,
                   ),
                   const SizedBox(height: 8),
                   Text(
                     bachelor.description ?? '',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
+                    style: Theme.of(context).textTheme.displaySmall,
                   ),
                 ],
               )

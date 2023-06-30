@@ -23,38 +23,68 @@ class BachelorDetails extends StatelessWidget {
           title: Text('${bachelor.firstname} ${bachelor.lastname}'),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_rounded),
-            onPressed: () => context.go("/"),
+            onPressed: () => context.pop(),
           )
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              GestureDetector(
-                  onTap: () {
-                    if (bachelorsStore.favorites.contains(bachelor.id)) {
-                      bachelorsStore.removeFavorite(bachelor.id);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Removed from favorites'), backgroundColor: Colors.teal),
-                      );
-                    } else {
-                      bachelorsStore.addFavorite(bachelor.id);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Added to favorites'), backgroundColor: Colors.teal),
-                      );
-                    }
-                  },
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Avatar(imagePath: bachelor.avatar),
-                      Opacity(opacity: 0.4,
-                        child: Icon(Icons.favorite, color: bachelorsStore.favorites.contains(bachelor.id) ? Colors.red : Colors.white, size: 50),
-                      )
-                    ],
-                  )
-              ),
+              Avatar(imagePath: bachelor.avatar, width: 128, height: 128),
               const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        bachelorsStore.toggleDislike(bachelor.id);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(bachelorsStore.disliked.contains(bachelor.id) ? 'Added to unliked' : 'Removed from unliked'),
+                            backgroundColor: Theme.of(context).primaryColor
+                            ),
+                        );
+
+                        if (bachelorsStore.disliked.contains(bachelor.id)) {
+                          context.go("/");
+                        }
+                      },
+                      icon: bachelorsStore.disliked.contains(bachelor.id) ?
+                      const Icon(
+                          Icons.thumb_down_alt,
+                          color: Colors.red,
+                          size: 24
+                      ) :
+                      const Icon(
+                          Icons.thumb_down_alt_outlined,
+                          color: Colors.grey,
+                          size: 24
+                      )
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        bachelorsStore.toggleLike(bachelor.id);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text(bachelorsStore.liked.contains(bachelor.id) ? 'Added to liked' : 'Removed from liked'),
+                              backgroundColor: Theme.of(context).primaryColor
+                          ),
+                        );
+                      },
+                      icon: bachelorsStore.liked.contains(bachelor.id) ?
+                      Icon(
+                          Icons.thumb_up_alt,
+                          color: Theme.of(context).primaryColor,
+                          size: 24
+                      ) :
+                      const Icon(
+                          Icons.thumb_up_alt_outlined,
+                          color: Colors.grey,
+                          size: 24
+                      )
+                  ),
+                ],
+              ),
               Text(
                 '${bachelor.firstname} ${bachelor.lastname}',
                 style: const TextStyle(

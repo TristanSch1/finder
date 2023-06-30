@@ -9,43 +9,82 @@ part of 'bachelorsStore.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$BachelorsStore on _BachelorsStore, Store {
-  Computed<List<Bachelor>>? _$favoritesListComputed;
+  Computed<List<Bachelor>>? _$bachelorsComputed;
 
   @override
-  List<Bachelor> get favoritesList => (_$favoritesListComputed ??=
-          Computed<List<Bachelor>>(() => super.favoritesList,
-              name: '_BachelorsStore.favoritesList'))
-      .value;
-
-  late final _$bachelorsAtom =
-      Atom(name: '_BachelorsStore.bachelors', context: context);
+  List<Bachelor> get bachelors =>
+      (_$bachelorsComputed ??= Computed<List<Bachelor>>(() => super.bachelors,
+              name: '_BachelorsStore.bachelors'))
+          .value;
+  Computed<List<Bachelor>>? _$likedListComputed;
 
   @override
-  ObservableList<Bachelor> get bachelors {
-    _$bachelorsAtom.reportRead();
-    return super.bachelors;
+  List<Bachelor> get likedList =>
+      (_$likedListComputed ??= Computed<List<Bachelor>>(() => super.likedList,
+              name: '_BachelorsStore.likedList'))
+          .value;
+
+  late final _$likedAtom =
+      Atom(name: '_BachelorsStore.liked', context: context);
+
+  @override
+  ObservableList<String> get liked {
+    _$likedAtom.reportRead();
+    return super.liked;
   }
 
   @override
-  set bachelors(ObservableList<Bachelor> value) {
-    _$bachelorsAtom.reportWrite(value, super.bachelors, () {
-      super.bachelors = value;
+  set liked(ObservableList<String> value) {
+    _$likedAtom.reportWrite(value, super.liked, () {
+      super.liked = value;
     });
   }
 
-  late final _$favoritesAtom =
-      Atom(name: '_BachelorsStore.favorites', context: context);
+  late final _$dislikedAtom =
+      Atom(name: '_BachelorsStore.disliked', context: context);
 
   @override
-  ObservableList<String> get favorites {
-    _$favoritesAtom.reportRead();
-    return super.favorites;
+  ObservableList<String> get disliked {
+    _$dislikedAtom.reportRead();
+    return super.disliked;
   }
 
   @override
-  set favorites(ObservableList<String> value) {
-    _$favoritesAtom.reportWrite(value, super.favorites, () {
-      super.favorites = value;
+  set disliked(ObservableList<String> value) {
+    _$dislikedAtom.reportWrite(value, super.disliked, () {
+      super.disliked = value;
+    });
+  }
+
+  late final _$genderFilterAtom =
+      Atom(name: '_BachelorsStore.genderFilter', context: context);
+
+  @override
+  GenderFilter get genderFilter {
+    _$genderFilterAtom.reportRead();
+    return super.genderFilter;
+  }
+
+  @override
+  set genderFilter(GenderFilter value) {
+    _$genderFilterAtom.reportWrite(value, super.genderFilter, () {
+      super.genderFilter = value;
+    });
+  }
+
+  late final _$searchFilterAtom =
+      Atom(name: '_BachelorsStore.searchFilter', context: context);
+
+  @override
+  String get searchFilter {
+    _$searchFilterAtom.reportRead();
+    return super.searchFilter;
+  }
+
+  @override
+  set searchFilter(String value) {
+    _$searchFilterAtom.reportWrite(value, super.searchFilter, () {
+      super.searchFilter = value;
     });
   }
 
@@ -53,22 +92,44 @@ mixin _$BachelorsStore on _BachelorsStore, Store {
       ActionController(name: '_BachelorsStore', context: context);
 
   @override
-  void addFavorite(String id) {
+  void toggleLike(String id) {
     final _$actionInfo = _$_BachelorsStoreActionController.startAction(
-        name: '_BachelorsStore.addFavorite');
+        name: '_BachelorsStore.toggleLike');
     try {
-      return super.addFavorite(id);
+      return super.toggleLike(id);
     } finally {
       _$_BachelorsStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void removeFavorite(String id) {
+  void toggleDislike(String id) {
     final _$actionInfo = _$_BachelorsStoreActionController.startAction(
-        name: '_BachelorsStore.removeFavorite');
+        name: '_BachelorsStore.toggleDislike');
     try {
-      return super.removeFavorite(id);
+      return super.toggleDislike(id);
+    } finally {
+      _$_BachelorsStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic clearFilters() {
+    final _$actionInfo = _$_BachelorsStoreActionController.startAction(
+        name: '_BachelorsStore.clearFilters');
+    try {
+      return super.clearFilters();
+    } finally {
+      _$_BachelorsStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic clearLiked() {
+    final _$actionInfo = _$_BachelorsStoreActionController.startAction(
+        name: '_BachelorsStore.clearLiked');
+    try {
+      return super.clearLiked();
     } finally {
       _$_BachelorsStoreActionController.endAction(_$actionInfo);
     }
@@ -77,9 +138,12 @@ mixin _$BachelorsStore on _BachelorsStore, Store {
   @override
   String toString() {
     return '''
+liked: ${liked},
+disliked: ${disliked},
+genderFilter: ${genderFilter},
+searchFilter: ${searchFilter},
 bachelors: ${bachelors},
-favorites: ${favorites},
-favoritesList: ${favoritesList}
+likedList: ${likedList}
     ''';
   }
 }

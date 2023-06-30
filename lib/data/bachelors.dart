@@ -13,7 +13,7 @@ List<Bachelor> generateBachelors () {
             faker.guid.guid(),
             mensFirstnames[faker.randomGenerator.integer(mensFirstnames.length - 1)],
             faker.person.lastName(),
-            randomGender(),
+            Gender.male,
             mensAvatars[i],
             [Gender.female],
             faker.job.title(),
@@ -28,9 +28,9 @@ List<Bachelor> generateBachelors () {
             faker.guid.guid(),
             womensFirstnames[faker.randomGenerator.integer(womensFirstnames.length - 1)],
             faker.person.lastName(),
-            randomGender(),
+            Gender.female,
             womensAvatars[i],
-            [Gender.female],
+            [Gender.male],
             faker.job.title(),
             faker.lorem.sentences(faker.randomGenerator.integer(3, min: 1)).join(' ')
         )

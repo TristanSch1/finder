@@ -1,9 +1,10 @@
-import 'package:finder/data/bachelors.dart';
-import 'package:finder/stores/bachelorsStore.dart';
-import 'package:finder/widgets/bachelor_preview_widget.dart';
+import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:finder/dart/drawer.dart';
+import 'package:finder/widgets/bachelor_reset_filter_widget.dart';
+import 'package:finder/widgets/bachelor_search_widget.dart';
+import 'package:finder/widgets/bachelors_list_widget.dart';
+import 'package:finder/widgets/gender_filters_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 
 class BachelorsMaster extends StatelessWidget {
@@ -11,9 +12,8 @@ class BachelorsMaster extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final BachelorsStore bachelorsStore = Provider.of<BachelorsStore>(context);
-
     return Scaffold(
+      drawer: drawer(context),
       appBar: AppBar(
         title: const Text('Bachelors'),
         actions: [
@@ -21,17 +21,15 @@ class BachelorsMaster extends StatelessWidget {
             icon: const Icon(Icons.favorite),
             onPressed: () => context.go('/favorites'),
           ),
+          const ResetFilter(),
         ],
       ),
-      body: Observer(
-        builder: (_) => ListView.separated(
-          padding: const EdgeInsets.all(8.0),
-          itemCount: bachelorsStore.bachelors.length,
-          itemBuilder: (BuildContext context, int index) {
-            return BachelorPreview(bachelor: bachelorsStore.bachelors[index]);
-          },
-          separatorBuilder: (BuildContext context, int index) => const Divider(),
-        )
+      body: const Column(
+        children: [
+          BachelorSearch(),
+          GenderFilters(),
+          BachelorsList(),
+        ],
       ),
     );
   }
